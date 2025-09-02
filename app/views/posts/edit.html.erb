@@ -1,0 +1,42 @@
+<div class="container">
+  <div class="Bar">
+    <section class="FormWrapper">
+      <h2 class="TitileText">予定を編集してください</h2>
+
+      <div class="FormContainer">
+          <%= render "shared/error", obj: @post %>
+          <%= form_with model: @post, local: true, html: { class: "row g-3 Form "} do |f|%>
+            <div class="col-12">
+              <%= f.label :title, "タイトル", class: "form-label requiired" %>
+              <%= f.text_field :title, class: "form-control", plachokder: "タイトル" %>
+            </div>
+
+            <div class="col-md-6">
+              <%= f.label :start_date, "開始日", class: "form-label required" %>
+              <%= f.date_field :start_date, class: "form-control js-datepicker", placeholder: "---- / -- / --"%>
+            </div>
+
+            <div class="col-md-6">
+              <%= f.label :end_date, "終了日", class: "form-label required" %>
+              <%= f.date_field :end_date, class: "form-control js-datepicker", placeholder: "---- / -- / --" %>
+            </div>
+
+            <div class="col-12" >
+              <%= f.check_box :all_day, class: "form-check-input", id: "post_all_day" %>
+              <%= f.label :all_day, "終日の場合はチェックを入れてください", class: "form-check-label", for: "post_all_day"%>
+            </div>
+
+            <div class="col-12">
+              <%= f.label :memo, "スケジュールメモ", class: "form-label" %>
+              <%= f.text_area :memo, class: "form-control", placeholder: "メモを入力する" %>
+            </div>
+
+            <div class="FormContainer_buttons">
+              <%= link_to "キャンセル", posts_path, class: "btn Button button-secondary" %>
+              <%= f.submit "保存", class: "btn btn-primary", data: { disable_with: "保存中" } %>
+            </div>
+          <% end %>
+      </div>
+    </section>
+  </div>
+<div>
