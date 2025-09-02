@@ -1,0 +1,63 @@
+<div class="container">
+  <div class="Bar"></div>
+    <div class="PageTitle">
+      <h2 class="TitleText">予定一覧</h2>
+
+      <% if flash[:notice] %>
+        <p class="notice"><%= flash[:notice] %></p>
+      <% end %>
+      <%= link_to :new_post, class: "btn btn-primary Button Button--primary" do %>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill Button__icon" viewBox="0 0 16 16">
+          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+        </svg>
+        新規追加
+      <% end %>
+
+    </div>
+    <div class="table-responsive TableResponsive">
+      <table class="table Table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>タイトル</th>
+            <th>開始日</th>
+            <th>終了日</th>
+            <th>終日</th>
+            <th>更新日時</th>
+            <th></th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @posts.each do |post| %>
+            <tr>
+              <td><%= post.id %></td>
+              <td><%= post.title %></td>
+              <td><%= post.start_date.strftime("%Y年%m月%d日") %></td>
+              <td><%= post.end_date.strftime("%Y年%m月%d日") %></td>
+              <td><%= post.all_day? ? "○" : "" %></td>
+              <td><%= post.updated_at.to_s(:datetime_jp) %></td>
+              <td>
+                <%= link_to "詳細", post %>
+              </td>
+              <td>
+                <%= link_to "編集", edit_post_path(post)%>
+              </td>
+              <td>
+                <%= link_to "削除", new_post_path, method: :delete, data: { confirm: "本当に削除しますか？" } %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <footer class="card Fotter">
+      <div class="card-body FooterBody">
+        <p class="FooterBody__count">予定合計: <strong><%= @posts.count %></strong> 件</p>
+
+        <p class="FooterBody__datetime">本日の日付: <strong><%= Time.current.strftime("%Y年%m月%d日") %></strong></p>
+      </div>
+    </footer>
+</div>
